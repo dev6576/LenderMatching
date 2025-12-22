@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS lenders (
+    id UUID PRIMARY KEY,
+    name TEXT NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT true,
+    created_at TIMESTAMP NOT NULL DEFAULT now()
+);
