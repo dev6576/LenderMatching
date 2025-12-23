@@ -67,3 +67,22 @@ def delete_rule(rule_id: str, db: Session = Depends(get_db)):
     db.commit()
 
     return {"status": "deleted"}
+
+@router.put("/api/v1/rules/{rule_id}")
+def update_rule(
+    rule_id: str,
+    payload: RuleUpdate,
+    db: Session = Depends(get_db),
+):
+    rule = db.query(Rule).filter(Rule.id == rule_id).first()
+    if not rule:
+        raise HTTPException(status_code=404, detail="Rule not found")
+
+    for field, value in payload.dict().items():
+        setattr(rule, field, value)
+
+    db.commit()
+    return {"status": "updated"}
+
+
+

@@ -1,19 +1,16 @@
-const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:8000";
-
 export async function apiFetch<T>(
-  path: string,
+  url: string,
   options?: RequestInit
 ): Promise<T> {
-  const res = await fetch(`${API_BASE}${path}`, {
-    headers: {
-      "Content-Type": "application/json",
-    },
+  const res = await fetch(url, {
+    headers: { "Content-Type": "application/json" },
     ...options,
-  });
+  })
 
   if (!res.ok) {
-    throw new Error(`API error: ${res.status}`);
+    const text = await res.text()
+    throw new Error(text)
   }
 
-  return res.json();
+  return res.json()
 }

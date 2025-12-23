@@ -1,4 +1,5 @@
-export type Lender = {
-  lender_id: string;
-  name: string;
-};
+export interface Lender {
+  id: string
+  name: string
+  active: boolean
+}

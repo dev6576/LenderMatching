@@ -98,4 +98,13 @@ lender-matching-platform/
 “Database schema is defined via SQL migrations committed to the repository. Local setup is supported via Docker Compose for reproducibility.”
 
 docker compose up -d
+
 python -m hatchet.server
+
+python -c "from app.db.base import Base; from app.db.session import engine; Base.metadata.create_all(bind=engine)"
+
+cd backend
+python -m app.workers.policy_ingestion_worker
+
+cd backend
+uvicorn app.main:app --reload

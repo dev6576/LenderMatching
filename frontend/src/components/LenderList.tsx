@@ -8,7 +8,7 @@ export default function LenderList({ lenders }: Props) {
   return (
     <ul>
       {lenders.map((l) => (
-        <li key={l.lender_id}>{l.name}</li>
+        <li key={l.id}>{l.name}</li>
       ))}
     </ul>
   );

@@ -6,6 +6,7 @@ from app.db.models import Policy, Rule, LoanApplicationRecord
 from app.underwriting.schemas import LoanApplication
 from app.underwriting.evaluator import evaluate_policy
 from app.underwriting.explainer import generate_underwriting_explanation
+from uuid import uuid4
 
 router = APIRouter()
 
