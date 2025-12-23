@@ -1,28 +1,27 @@
-from fastapi import APIRouter
-from uuid import UUID, uuid4
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+
+from app.db.deps import get_db
+from app.db.models import LoanApplicationRecord
 
 router = APIRouter()
 
 
-@router.post("")
-def create_application(payload: dict):
-    """
-    Create a loan application.
-    """
-    application_id = uuid4()
-    return {
-        "application_id": application_id,
-        "status": "CREATED"
-    }
+@router.get("/")
+def list_loan_applications(db: Session = Depends(get_db)):
+    apps = (
+        db.query(LoanApplicationRecord)
+        .order_by(LoanApplicationRecord.submitted_at.desc())
+        .limit(20)
+        .all()
+    )
 
-
-@router.get("/{application_id}")
-def get_application(application_id: UUID):
-    """
-    Fetch a loan application.
-    """
-    return {
-        "application_id": application_id,
-        "status": "CREATED",
-        "data": {}
-    }
+    return [
+        {
+            "id": str(a.id),
+            "submitted_at": a.submitted_at,
+            "application_payload": a.application_payload,
+            "underwriting_result": a.underwriting_result,
+        }
+        for a in apps
+    ]

@@ -1,18 +1,18 @@
 from pydantic import BaseModel
-from uuid import UUID
+from typing import Any
+
+class UnderwritingRequest(BaseModel):
+    application: dict
 
 
-class UnderwritingRunRequest(BaseModel):
-    application_id: UUID
+class RuleEvaluation(BaseModel):
+    rule_type: str
+    passed: bool
+    explanation: str
 
 
-class UnderwritingRunResponse(BaseModel):
-    run_id: UUID
-    status: str
-
-
-class UnderwritingStatusResponse(BaseModel):
-    run_id: UUID
-    status: str
-    completed_lenders: int
-    total_lenders: int
+class UnderwritingResult(BaseModel):
+    lender_id: str
+    eligible: bool
+    fit_score: int | None
+    evaluations: list[RuleEvaluation]

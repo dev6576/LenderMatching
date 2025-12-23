@@ -22,3 +22,14 @@ class PolicyResponse(BaseModel):
     lender_id: UUID
     program: str
     version: int
+
+
+class PolicyOut(BaseModel):
+    policy_id: UUID
+    lender_id: UUID
+    program: str
+    version: int
+    active: bool
+
+    class Config:
+        orm_mode = True
