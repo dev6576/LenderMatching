@@ -1,9 +1,3 @@
-# Downloadable – Lender Matching Platform (MVP)
-
-This document describes what is implemented, what can be run, and what is intentionally incomplete in the current state of the Lender Matching Platform.
-
----
-
 ## Current State Summary
 
 - Backend is fully functional and testable
